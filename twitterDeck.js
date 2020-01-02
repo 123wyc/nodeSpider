@@ -5,7 +5,6 @@ const store = require('./store');
 
 (async () => {
     await twitterdeck()
-
 })();
 
 async function twitterdeck() {
