@@ -13,7 +13,7 @@ function createConnection(config) {
         if (config.retry.interval > 0) retryInterval = config.retry.interval;
     }
 
-    var connection = mysql.createConnection(config);
+    var connection = mysql.createPool(config);
 
     return {
         query(sql, args) {
