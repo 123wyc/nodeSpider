@@ -1,6 +1,7 @@
 const config = require('./config');
 const dbutil = require('./dbutil');
 const fetch = require("node-fetch");
+const mysql = require('mysql')
 
 async function InsertSql(objarr) {
     const db = dbutil.createConnection(config.mysql);  
@@ -10,6 +11,9 @@ async function InsertSql(objarr) {
         await db.query(addsql,[objarr])
     }catch(e){
         console.error(e);
+    }
+    finally{
+        await db.close()
     }
 }
 // 索引数据

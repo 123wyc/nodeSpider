@@ -7,6 +7,7 @@ const store = require('./store');
     await twitterdeck()
 })();
 
+let oldobj ={}
 async function twitterdeck() {
     const url = "https://tweetdeck.twitter.com" ;
     const browser = await puppeteer.connect({
@@ -36,7 +37,7 @@ async function twitterdeck() {
             data = inspect(await response.json());
           } catch (error) {
             try {
-              data = await response.text();
+              data = await response.text();            
               await DataRes(data)
             } catch (error) {
               data = '[ERROR]' + error;
@@ -49,7 +50,9 @@ async function twitterdeck() {
 };
 
 async function DataRes(data) {
+  console.info("解析---")
     let obj = eval ("(" + data + ")")
+    //console.info(obj)
     var indexLibraryObj={} //入索引
     let DateArr =[]
     let crowlTime=await getNowFormatDate()
@@ -57,6 +60,22 @@ async function DataRes(data) {
        let DataObj=[]
        let Text =  obj[i].full_text
        let id =  obj[i].conversation_id_str
+       let flag = 'false'
+       console.info("length："+oldobj.length)
+       if(oldobj.length>0){
+          for(let p=0;p<oldobj.length;p++){   
+            if(oldobj[i].conversation_id_str == id){
+              console.info("oldId:"+oldobj[i].conversation_id_str +"----- newId:"+id)
+              flag = 'true'
+              break;
+            }
+        }
+          if( flag == 'true'){
+              console.info('发现重复信息略过本条！')
+              continue;
+          }
+       }
+       console.info('go')
        let time =  await DateFormat(obj[i].created_at)
        let username = obj[i].user.name
        let screenname = obj[i].user.screen_name
@@ -82,9 +101,10 @@ async function DataRes(data) {
          likenum : favorite_count,
          long:long
        }
+       await store.Index(indexLibraryObj) //索引库
     }
     await store.InsertSql(DateArr) // 插库
-    await store.Index(indexLibraryObj)
+    oldobj =  eval ("(" + data + ")") //存一次旧数据
 }
 
 async function DateFormat(time) {

@@ -10,7 +10,6 @@ const config = {
             interval: 3 // 每次重试之前睡眠的秒数，最少一秒
         }
     },
-    indexer: "http://192.168.20.136:16140/update"
+    indexer: "http://192.168.20.136:16140/ridx/v1/update"
 }
-
 module.exports = config;
