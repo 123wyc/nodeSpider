@@ -18,7 +18,7 @@ async function InsertSql(objarr) {
 }
 // 索引数据
 async function Index(data) {
-    console.info("indexLibraryObj",data)
+    //console.info("indexLibraryObj",data)
     // 1. 插入索引库
       var ires = await fetch(config.indexer, {
           method: "POST",
@@ -26,7 +26,6 @@ async function Index(data) {
       });
       console.info(JSON.stringify(data))
       var body = await ires.text();
-      console.info(body)
       if (ires.status == 200) {                
           console.log('post success');
       } else {
