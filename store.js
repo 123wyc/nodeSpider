@@ -7,7 +7,7 @@ async function InsertSql(objarr) {
     const db = dbutil.createConnection(config.mysql);  
     //console.info(objarr)
     try{
-        var addsql ='INSERT IGNORE INTO tw_tweet_deck (id,text,release_time,user_name,screen_name,link,retweet_count,favorite_count,reply_count,language,crawltime) VALUES ?';
+        var addsql ='INSERT IGNORE INTO tw_tweet_deck (id,text,release_time,user_name,screen_name,link,retweet_count,favorite_count,reply_count,language,crawltime,cl_account) VALUES ?';
         await db.query(addsql,[objarr])
     }catch(e){
         console.error(e);
