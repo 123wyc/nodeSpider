@@ -61,6 +61,8 @@ async function DataRes(data) {
        //let DateArr =[]
        let DataObj=[]
        var indexLibraryObj={} //入索引
+       var indexUserObj={} // 入作者索引
+
        let Text =  obj[i].full_text
        let id =  obj[i].conversation_id_str
        let time =  await DateFormat(obj[i].created_at)
@@ -91,6 +93,10 @@ async function DataRes(data) {
          likenum : favorite_count,
          long:long
        }
+       indexUserObj.id = screenname
+       indexUserObj.name = username
+       indexUserObj.source = "twitter"
+       await store.IndexUser(indexUserObj)
        await store.Index(indexLibraryObj)
     }
     await store.InsertSql(DateArr) // 插库

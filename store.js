@@ -32,6 +32,22 @@ async function Index(data) {
           console.log('post error');
       }
   }
-  
+// 索引数据
+async function IndexUser(data) {
+    //console.info("indexLibraryObj",data)
+    // 1. 插入索引库
+      var ires = await fetch(config.indexer2, {
+          method: "POST",
+          body: JSON.stringify(data)
+      });
+      console.info(JSON.stringify(data))
+      var body = await ires.text();
+      if (ires.status == 200) {                
+          console.log('post success');
+      } else {
+          console.log('post error');
+      }
+  }  
 exports.InsertSql = InsertSql
 exports.Index = Index
+exports.IndexUser = IndexUser

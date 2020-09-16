@@ -11,6 +11,7 @@ const config = {
         }
     },
     indexer: "http://192.168.20.136:16140/ridx/v1/update",
+    indexer2: "http://192.168.20.67:16140/ridx/user/v1/update",
     cl_account:"oilwatcher"
 }
 module.exports = config;
